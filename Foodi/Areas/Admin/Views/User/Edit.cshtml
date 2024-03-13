@@ -1,0 +1,128 @@
+﻿@model User;
+
+
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                        <h4 class="sub-title">
+                                            @if (Model != null && Model.UserID != null)
+                                            {
+                                                <text>Edit User</text>
+                                            }
+                                            else
+                                            {
+                                                <text>Add User</text>
+                                            }
+                                        </h4>
+                                        <div>
+
+                                            <form role="form" method="post" asp-area="Admin" asp-controller="User" asp-action="@(Model?.UserID > 0 ? "Edit" : "")" enctype="multipart/form-data">
+                                                @Html.HiddenFor(x => x.UserID)
+                                                <div class="form-group">
+                                                    <label>User Name</label>
+                                                    <div>
+                                                        <input type="text" id="Name" name="Name" class="form-control" asp-for="Name" value="@Model?.Name" />
+                                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Phone Number</label>
+                                                    <div>
+                                                        <input type="text" id="Mobile" name="Mobile" class="form-control" asp-for="Mobile" value="@Model?.Mobile" />
+                                                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <div>
+                                                        <input type="text" id="Email" name="Email" class="form-control" asp-for="Email" value="@Model?.Email" />
+                                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <div>
+                                                        <textarea class="form-control" asp-for="Address">Address</textarea>
+                                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Post Code</label>
+                                                    <div>
+                                                        <input type="text" id="PostCode" name="PostCode" class="form-control" asp-for="PostCode" />
+                                                        <span asp-validation-for="PostCode" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Image</label>
+                                                    <div>
+                                                        <input type="file" id="Image" name="Image" class="form-control" asp-for="Image" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-check pl-2">
+
+                                                    @if (Model?.IsAdmin != false)
+                                                    {
+                                                        <input type="checkbox" id="IsAdmin" name="IsAdmin" asp-for="IsAdmin" checked />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="IsAdmin" name="IsAdmin" asp-for="IsAdmin" />
+                                                     } 
+                                                    <label for="IsActive">Is Admin</label>
+                                                    <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Password</label>
+                                                    <div>
+                                                        <input type="text" id="Password" name="Password" class="form-control" asp-for="Password" />
+                                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="pb-5">
+                                                    <button class="btn btn-primary" type="submit">
+                                                        @if (Model?.UserID > 0)
+                                                        {
+                                                            <text>Update</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>Add</text>
+                                                        }
+                                                    </button>
+                                                    <a href="@Url.Action("User", "User", new { area = "Admin" })" class="your-css-class">
+                                                        <span class="badge badge-primary ml-2 mt-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-left" viewBox="0 0 16 16">
+                                                                <path fill-rule="evenodd" d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223" />
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <img src="~/@Model?.Image" height="100px" width="100px" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

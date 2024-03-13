@@ -1,0 +1,151 @@
+﻿@model List<Foodi.Areas.Admin.Models.Cart>;
+
+<script>
+
+    notify({
+        message: 'Notification Message Here'
+    });
+</script>
+
+
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+
+            <div class="page-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-block">
+
+                                <form asp-area="Admin" asp-controller="CartAdmin" asp-action="Cart">
+                                    <div class="row">
+                                        <div id="sample_1_filter" class="dataTables-filter col-md-5">
+                                            <input type="text" class="form-control input-sm input-small input-inline" id="searchString" name="searchString" placeholder="Search Name" />
+                                        </div>
+                                        <div class="col-md-3">
+
+                                            <select class="form-control" id="isAdmin" name="isAdmin">
+                                                <option value="">Search IsAdmin</option>
+                                                <option value="true">Yes</option>
+                                                <option value="false">No</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a type="button" class="btn btn-success mdi mdi-plus" asp-area="Admin" asp-controller="CartAdmin" asp-action="AddCart">&nbsp;add Cart</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form asp-area="Admin" asp-controller="CartAdmin" asp-action="DeleteMultipleCarts" method="post">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-danger" id="btnDeleteMultiple">Delete Selected</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label><input type="checkbox" id="selectAll"> Select All</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col mobile-inputs">
+                                            <h4 class="sub-title mt-3">Users</h4>
+                                            <div class="card-block table-border-style">
+                                                <div class="table-responsive">
+                                                    <table class="table data-table-export table-hover nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><span class="mr-2">Select All</span><input type="checkbox" id="selectAll"></th>
+                                                                <th class="table-pulse">Product</th>
+                                                                <th>Quantity</th>
+                                                                <th>User Id</th>
+                                                                <th>Created Date</th>
+                                                                <th>Modified Date</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var Cart in Model)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="checkbox" name="cartIds" value="@Cart.CartId" />
+                                                                    </td>
+                                                                    <td>@Cart.ProductName</td>
+                                                                    <td>@Cart.Quantity</td>
+                                                                    <td>@Cart.UserName</td>
+                                                                    <td>@Cart.CreatedDate</td>
+                                                                    <td>@Cart.ModifiedDate</td>
+                                                                    <td>
+                                                                        <a asp-area="Admin" asp-controller="CartAdmin" asp-action="EditCart" asp-route-CartId="@Cart.CartId">
+                                                                            <button class="btn btn-primary">Edit</button>
+                                                                        </a>
+                                                                        <a asp-area="Admin" asp-controller="CartAdmin" asp-action="DeleteCart" asp-route-CartId="@Cart.CartId">
+                                                                            <button class="btn btn-danger">Delete</button>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+
+                                                        <tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#btnDeleteMultiple').hide();
+
+        // Handle checkbox change event
+        $('input[name="cartIds"]').on('change', function () {
+            if ($('input[name="cartIds"]:checked').length > 0) {
+                $('#btnDeleteMultiple').show();
+            } else {
+                // Hide the delete button if no checkbox is checked
+                $('#btnDeleteMultiple').hide();
+            }
+        });
+
+        // Handle "Select All" checkbox click
+        $('#selectAll').on('click', function () {
+            $('input[name="cartIds"]').prop('checked', $(this).prop('checked'));
+
+            // Show or hide the delete button based on the "Select All" checkbox state
+            if ($(this).prop('checked')) {
+                $('#btnDeleteMultiple').show();
+            } else {
+                $('#btnDeleteMultiple').hide();
+            }
+        });
+    });
+</script>
+@* <script>
+    $(document).ready(function () {
+        $('#btnDeleteMultiple').on('click', function () {
+            $('input[name="cartIds"]').prop('checked', true);
+        });
+    });
+</script> *@

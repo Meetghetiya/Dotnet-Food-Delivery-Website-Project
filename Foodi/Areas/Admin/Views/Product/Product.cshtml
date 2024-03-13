@@ -1,0 +1,272 @@
+﻿@model List<Foodi.Areas.Admin.Models.Product>;
+
+
+@* <script>
+
+    notify({
+        message: 'Notification Message Here'
+    });
+</script>
+
+<style type="text/css" media="(min-width: 1200px)">
+    #sample_1_filter {
+        width: 90%; /* Adjust the width as needed */
+        margin-right: 10px; /* Add some spacing between the label and input */
+    }
+
+    #search {
+        width: 50%; /* Set the input width to 100% */
+    }
+
+    #searchbutton {
+        margin-left: 1000;
+    }
+
+</style>
+
+<style type="text/css" media="screen and (max-width:959px)">
+    #searchbutton {
+        width: 20%;
+    }
+
+    #hide {
+        display: none;
+    }
+</style> *@
+
+
+
+
+
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="card">
+                            <h5 class="card-header">Filter</h5>
+                            <div class="card-body">
+                                <form asp-area="Admin" asp-controller="Product" asp-action="Product">
+                                    <div class="row">
+                                        <div id="sample_1_filter" class="dataTables-filter col-md-5">
+                                            <input type="text" class="form-control input-sm input-small input-inline" id="searchName" name="searchName" placeholder="Search Name" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="isActive" name="isActive">
+                                                <option value="">Search IsActive</option>
+                                                <option value="true">Yes</option>
+                                                <option value="false">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-block">
+
+                                <form asp-area="Admin" asp-controller="Product" asp-action="DeleteMultipleCarts" method="post">
+
+
+
+                                    <div class="row">
+
+                                        <div class="col mobile-inputs">
+                                            <div class="d-flex mb-3">
+                                                <div class="p-2 w-100">
+                                                    <h4 class="">Product Lists</h4>
+                                                </div>
+
+                                                <div class="ms-auto mt-2 ml-2">
+                                                    <a type="button" class="btn btn-success mdi mdi-plus ml-lg-5" id="btn" asp-area="Admin" asp-controller="Product" asp-action="ExportProductsToExcel">&nbsp;Export Excel</a>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div id="sample_1_filter" class="dataTables-filter col-md-8">
+                                                    <label>Search Any&nbsp;<input type="text" class="form-control input-sm input-small input-inline" id="search" aira-control="sample_1" /></label>
+                                                </div>
+                                                 <div class="col-md-1 col-6   ">
+                                                <button type="submit" class="btn btn-danger" id="btnDeleteMultiple">Delete</button>
+                                                </div>
+                                                <div class="col-md-2 col-6  ">
+                                                    <a type="button" class="btn btn-success mdi mdi-plus ml-lg-5" id="btn" asp-area="Admin" asp-controller="Product" asp-action="AddProduct">&nbsp;add Product</a>
+                                                </div>
+                                            </div>
+
+                             
+
+                                            <div class="card-block table-border-style">
+                                                <div class="table-responsive">
+                                                    <table class="table data-table-export table-hover ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><span class="mr-2">Select All</span><input type="checkbox" id="selectAll"></th>
+                                                                <th class="table-pulse">Name</th>
+                                                                <th>Description</th>
+                                                                <th>Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>ImageUrl</th>
+                                                                <th>CategoryName</th>
+                                                                <th>IsActive</th>
+                                                                <th>CreatedDate</th>
+                                                                <th>ModifiedDate</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var product in Model)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="checkbox" name="ProductIds" value="@product.ProductId" />
+                                                                    </td>
+                                                                    <td>@product.Name</td>
+                                                                    <td>@product.Description</td>
+                                                                    <td>@product.Price</td>
+                                                                    <td>@product.Quantity</td>
+                                                                    <td><img src="~/@product.ImageUrl" height="100px" width="100px" /></td>
+                                                                    <td>@product.CategoryName</td>
+                                                                    <td>@product.IsActive</td>
+                                                                    <td>@product.CreatedDate</td>
+                                                                    <td>@product.ModifiedDate</td>
+                                                                    <td>
+                                                                        <a href="@Url.Action("EditProduct", "Product", new { area = "Admin" ,productId = @product.ProductId})" class="your-css-class">
+                                                                            <span class="badge badge-primary">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                                                                                </svg>
+                                                                            </span>
+                                                                        </a>
+                                                                        <a class="your-css-class" onclick="confirmDelete('@Url.Action("DeleteProduct", "Product", new { area = "Admin" ,productId = @product.ProductId})')">
+                                                                            <span class="badge badge-danger">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                                                                </svg>
+                                                                            </span>
+                                                                        </a>
+                                                                       
+                                                                       @*  <a asp-area="Admin" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.ProductId">
+                                                                            <button class="btn btn-primary">Edit</button>
+                                                                        </a>
+                                                                        <a asp-area="Admin" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@product.ProductId">
+                                                                            <button class="btn btn-danger">Delete</button>
+                                                                        </a> *@
+                                                                    </td>
+                                                                </tr>
+                                                            }
+
+                                                        <tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+
+     function confirmDelete(url) {
+        if (confirm("Are you sure you want to delete?")) {
+            window.location.href = url; // Redirect to delete action if user clicks OK
+        } else {
+            // Do nothing or handle cancellation
+        }
+    }
+
+
+    $(document).ready(function () {
+        // Initially hide the delete button
+        $('#btnDeleteMultiple').hide();
+
+        // Handle checkbox change event
+        $('input[name="ProductIds"]').on('change', function () {
+            // Show the delete button if any checkbox is checked
+            if ($('input[name="ProductIds"]:checked').length > 0) {
+                $('#btnDeleteMultiple').show();
+            } else {
+                $('#btnDeleteMultiple').hide();
+            }
+        });
+
+        // Handle "Select All" checkbox click
+        $('#selectAll').on('click', function () {
+            $('input[name="ProductIds"]').prop('checked', $(this).prop('checked'));
+
+            // Show or hide the delete button based on the "Select All" checkbox state
+            if ($(this).prop('checked')) {
+                $('#btnDeleteMultiple').show();
+            } else {
+                $('#btnDeleteMultiple').hide();
+            }
+        });
+
+
+        function filterTable() {
+            var searchValue = $('#search').val().toLowerCase();
+
+            $('table.data-table-export tbody tr').each(function () {
+                var nameColumn = $(this).find('td:eq(1)').text().toLowerCase();
+                var descriptionColumn = $(this).find('td:eq(2)').text().toLowerCase();
+                var priceColumn = $(this).find('td:eq(3)').text().toLowerCase();
+                var quantityColumn = $(this).find('td:eq(4)').text().toLowerCase();
+                var imageUrlColumn = $(this).find('td:eq(5)').text().toLowerCase();
+                var categoryNameColumn = $(this).find('td:eq(6)').text().toLowerCase();
+                var isActiveColumn = $(this).find('td:eq(7)').text().toLowerCase();
+                var createdDateColumn = $(this).find('td:eq(8)').text().toLowerCase();
+                var modifiedDateColumn = $(this).find('td:eq(9)').text().toLowerCase();
+
+                if (
+                    nameColumn.includes(searchValue) ||
+                    descriptionColumn.includes(searchValue) ||
+                    priceColumn.includes(searchValue) ||
+                    quantityColumn.includes(searchValue) ||
+                    imageUrlColumn.includes(searchValue) ||
+                    categoryNameColumn.includes(searchValue) ||
+                    isActiveColumn.includes(searchValue) ||
+                    createdDateColumn.includes(searchValue) ||
+                    modifiedDateColumn.includes(searchValue)
+                ) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        $('#search').on('input', function () {
+            filterTable();
+        });
+    });
+</script>
+
+@* <script>
+    $(document).ready(function () {
+        $('#btnDeleteMultiple').on('click', function () {
+            $('input[name="ProductIds"]').prop('checked', true);
+        });
+    });
+</script> *@
+
+

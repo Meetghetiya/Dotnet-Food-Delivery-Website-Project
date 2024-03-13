@@ -1,0 +1,209 @@
+﻿@model List<User>;
+
+<script>
+
+    notify({
+        message: 'Notification Message Here'
+    });
+</script>
+
+
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="card">
+                            <h5 class="card-header">Filter</h5>
+                            <div class="card-body">
+                                <form asp-area="Admin" asp-controller="User" asp-action="User">
+                                    <div class="row">
+                                        <div id="sample_1_filter" class="dataTables-filter col-md-5">
+                                            <input type="text" class="form-control input-sm input-small input-inline" id="searchString" name="searchString" placeholder="Search Name" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="isAdmin" name="isAdmin">
+                                                <option value="">Search isAdmin</option>
+                                                <option value="true">Yes</option>
+                                                <option value="false">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-block">
+
+                               
+
+                               
+
+                               @*   <form asp-area="Admin" asp-controller="User" asp-action="DeleteMultipleCarts" method="post"> *@
+                                  @*   <div class="row">
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-danger" id="btnDeleteMultiple">Delete Selected</button>
+                                        </div>
+                                    </div> *@
+                                <div class="row">
+
+                                    <div class="col mobile-inputs">
+
+                                            <div class="row">
+                                                <div id="sample_1_filter" class="dataTables-filter col-md-8 col-6">
+                                                    <label>Search Any&nbsp;<input type="text" class="form-control input-sm input-small input-inline" id="search" aira-control="sample_1" /></label>
+                                                </div>
+                                              
+                                                <div class="col-md-2 col-6 mt-3 ">
+                                                    <a type="button" class="btn btn-success mdi mdi-plus ml-lg-5" id="btn" asp-area="Admin" asp-controller="User" asp-action="ExportUsersToExcel">&nbsp;Export Excel</a>
+                                                </div>
+                                            </div>
+
+                                        <h4 class="sub-title mt-3">Users</h4>
+                                        <div class="card-block table-border-style">
+                                            <div class="table-responsive">
+                                                <table class="table data-table-export table-hover nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            @* <th><span class="mr-2">Select All</span><input type="checkbox" id="selectAll"></th> *@
+                                                            <th class="table-pulse">Name</th>
+                                                            <th>Username</th>
+                                                            <th>Mobile</th>
+                                                            <th>Email</th>
+                                                            <th>Address</th>
+                                                            <th>PostCode</th>
+                                                            <th>Password</th>
+                                                            <th>Image</th>
+                                                            <th>IsAdmin</th>
+                                                            <th>Created Date</th>
+                                                            <th>Modified Date</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var user in Model)
+                                                        {
+                                                            <tr>
+                                                                @* <td>
+                                                                        <input type="checkbox" name="userIds" value="@user.UserID" />
+                                                                </td> *@
+                                                                <td>@user.Name</td>
+                                                                <td>@user.UserName</td>
+                                                                <td>@user.Mobile</td>
+                                                                <td>@user.Email</td>
+                                                                <td>@user.Address</td>
+                                                                <td>@user.PostCode</td>
+                                                                <td>@user.Password</td>
+                                                                <td><img src="~/@user.Image" height="100px" width="100px" /></td>
+                                                                <td>@user.IsAdmin</td>
+                                                                @* <td>@user.Image</td> *@
+                                                                <td>@user.CreatedDate</td>
+                                                                <td>@user.ModifiedDate</td>
+                                                                <td>
+                                                                       
+                                                                    <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-Id="@user.UserID">
+                                                                        <button class="btn btn-primary">Edit</button>
+                                                                    </a>
+                                                                  @*   <a asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.UserID">
+                                                                        <button class="btn btn-danger">Delete</button>
+                                                                    </a> *@
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+                                                    <tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               @*  </form> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#btnDeleteMultiple').hide();
+
+        $('input[name="userIds"]').on('change', function () {
+            // Show the delete button if any checkbox is checked
+            if ($('input[name="userIds"]:checked').length > 0) {
+                $('#btnDeleteMultiple').show();
+            } else {
+                $('#btnDeleteMultiple').hide();
+            }
+        });
+
+        // Handle "Select All" checkbox click
+        $('#selectAll').on('click', function () {
+            $('input[name="userIds"]').prop('checked', $(this).prop('checked'));
+
+            // Show or hide the delete button based on the "Select All" checkbox state
+            if ($(this).prop('checked')) {
+                $('#btnDeleteMultiple').show();
+            } else {
+                $('#btnDeleteMultiple').hide();
+            }
+        });
+
+
+        function filterTable() {
+            var searchValue = $('#search').val().toLowerCase();
+
+            $('table.data-table-export tbody tr').each(function () {
+                var nameColumn = $(this).find('td:eq(1)').text().toLowerCase();
+                var usernameColumn = $(this).find('td:eq(2)').text().toLowerCase();
+                var mobileColumn = $(this).find('td:eq(3)').text().toLowerCase();
+                var emailColumn = $(this).find('td:eq(4)').text().toLowerCase();
+                var addressColumn = $(this).find('td:eq(5)').text().toLowerCase();
+                var postCodeColumn = $(this).find('td:eq(6)').text().toLowerCase();
+                var passwordColumn = $(this).find('td:eq(7)').text().toLowerCase();
+                var imageColumn = $(this).find('td:eq(8)').text().toLowerCase();
+                var isAdminColumn = $(this).find('td:eq(9)').text().toLowerCase();
+                var createdDateColumn = $(this).find('td:eq(10)').text().toLowerCase();
+                var modifiedDateColumn = $(this).find('td:eq(11)').text().toLowerCase();
+
+                if (
+                    nameColumn.includes(searchValue) ||
+                    usernameColumn.includes(searchValue) ||
+                    mobileColumn.includes(searchValue) ||
+                    emailColumn.includes(searchValue) ||
+                    addressColumn.includes(searchValue) ||
+                    postCodeColumn.includes(searchValue) ||
+                    passwordColumn.includes(searchValue) ||
+                    imageColumn.includes(searchValue) ||
+                    isAdminColumn.includes(searchValue) ||
+                    createdDateColumn.includes(searchValue) ||
+                    modifiedDateColumn.includes(searchValue)
+                ) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        $('#search').on('input', function () {
+            filterTable();
+        });
+    });
+</script>
+

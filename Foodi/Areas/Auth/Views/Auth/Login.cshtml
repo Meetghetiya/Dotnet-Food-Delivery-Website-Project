@@ -1,0 +1,89 @@
+﻿@model User;
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<script>
+
+    notify({
+        message: 'Notification Message Here'
+    });
+</script>
+
+<!-- book section -->
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>
+                Login
+            </h2>
+        </div>
+
+        <div class="form_container">
+            <form role="form" method="post" asp-area="Auth" asp-controller="Auth" asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div>
+                                <input type="text" id="Email" name="Email" class="form-control" asp-for="Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div>
+                                <input type="text" id="Password" name="Password" class="form-control" asp-for="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn_box col">
+                        <button type="submit">
+                            Login
+                        </button>
+                        <div class="">
+                            Fogot Password ? <a class="text-black fw-bold" asp-area="Auth" asp-controller="Auth" asp-action="EmailForgot">Reset Password</a>
+                        </div>
+                    </div>
+                    <div class="col mt-4">
+                        You don't have a account? <a class="text-black fw-bold" asp-area="Auth" asp-controller="Auth" asp-action="Register">Register</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<!-- end book section -->
+@* @{
+    var registrationMessage = @TempData["RegistrationMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(registrationMessage))
+{
+
+
+    <script>
+        toastr.success('@registrationMessage');
+    </script>
+
+     function showSweetAlert(message, type) {
+            Swal.fire({
+                text: message,
+                icon: type,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+        showSweetAlert('@registrationMessage', 'info');
+
+} *@
+

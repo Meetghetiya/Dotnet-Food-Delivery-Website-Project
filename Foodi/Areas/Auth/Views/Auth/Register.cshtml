@@ -1,0 +1,103 @@
+﻿@model User;
+
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<script>
+
+    notify({
+        message: 'Notification Message Here'
+    });
+</script>
+
+
+<!-- book section -->
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>
+                Registration
+            </h2>
+        </div>
+
+        <div class="form_container">
+
+            <form role="form" method="post" asp-area="Auth" asp-controller="Auth" asp-action="Register" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <div>
+                                <input type="text" id="Name" name="Name" class="form-control" asp-for="Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="text-danger">*</span> Phone Number</label>
+                            <div>
+                                <input type="text" id="Mobile" name="Mobile" class="form-control" asp-for="Mobile" />
+                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="text-danger">*</span> Email Address</label>
+                            <div>
+                                <input type="text" id="Email" name="Email" class="form-control" asp-for="Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label> <span class="text-danger">*</span> Password</label>
+                            <div>
+                                <input type="text" id="Password" name="Password" class="form-control" asp-for="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <div>
+                                <textarea class="form-control" asp-for="Address">Address</textarea>
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label> <span class="text-danger">*</span> Post Code</label>
+                            <div>
+                                <input type="text" id="PostCode" name="PostCode" class="form-control" asp-for="PostCode" />
+                                <span asp-validation-for="PostCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <div>
+                                <input type="file" id="Image" name="Image" class="form-control" asp-for="Image" />
+                               
+                            </div>
+                        </div>
+                       
+                     
+                        
+                    </div>
+
+                </div>
+
+             
+
+                <div class="btn_box">
+                    <button type="submit">
+                        Register
+                    </button>
+                    <div>
+                        you have an account? <a class="text-black fw-bold" asp-area="Auth" asp-controller="Auth" asp-action="Login">Login</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- end book section -->

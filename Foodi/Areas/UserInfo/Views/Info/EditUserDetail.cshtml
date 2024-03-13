@@ -1,0 +1,214 @@
+﻿@model User;
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css" />
+
+
+<style>
+
+
+    * {
+        font-family: "Poppins", sans-serif;
+    }
+
+    #accordionFlushExample {
+        --bs-accordion-focus-box-shadow: none;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .accordion {
+        background: transparent;
+    }
+
+    .accordion-item {
+        background: #ffffff;
+        border: black;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.1),-2px -2px 8px rgba(0,0,0,0.1);
+    }
+
+    .accordion-body {
+        background: #ffffff;
+        font-size: 1rem;
+    }
+
+    .accordion-button {
+        font-size: 0.8rem;
+        background: black;
+        outline: none;
+        border: 1px solid rgba(0,0,0,0.1);
+        font-weight: 500;
+    }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border: black;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: rgba(0,0,0,0.1);
+            color: black;
+            box-shadow: none;
+        }
+
+        .accordion-button::after {
+            background-image: none;
+            content: "\f0d7";
+            font-family: fontawesome;
+            width: auto;
+            height: auto;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            background-image: none;
+        }
+
+    .accordion-button {
+        background: #F8F8FF;
+    }
+
+</style>
+
+  @inject IHttpContextAccessor HttpContextAccessor
+
+@functions {
+    private string GetEmail()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Email");
+
+    }
+    private string GetImage()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Image");
+    }
+
+    private string GetUserId()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("UserId");
+    }
+    private bool IsUserLoggedIn()
+    {
+        return !string.IsNullOrEmpty(GetEmail());
+    }
+    private string GetUserName()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Name");
+    }
+    private string GetCreatedDate()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("CreatedDate");
+    }
+    private string GetPostCode()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("PostCode");
+    }
+    private string GetAddress()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Address");
+    }
+}
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-md-5">
+        </div>
+        <div class="col-md-4  heading_container">
+            <h2>Edit Detail</h2>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <form role="form" method="post" asp-area="UserInfo" asp-controller="Info" asp-action="EditUserDetail" enctype="multipart/form-data">
+                            @Html.HiddenFor(x => x.UserID)
+                            @Html.HiddenFor(x => x.Name)
+                            @Html.HiddenFor(x => x.Password)
+                            @Html.HiddenFor(x => x.IsAdmin)
+                            @Html.HiddenFor(x => x.Image)
+                            @Html.HiddenFor(x => x.CreatedDate)
+                            @Html.HiddenFor(x => x.ModifiedDate)
+                            <div class="form-group">
+                                <label>Name</label>
+                                <div>
+                                    <input type="text" id="UserName" name="UserName" class="form-control" asp-for="UserName" value="@Model?.UserName" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div>
+                                    <input type="text" id="Mobile" name="Mobile" class="form-control" asp-for="Mobile" value="@Model?.Mobile" />
+                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div>
+                                    <input type="text" id="Email" name="Email" class="form-control" asp-for="Email" value="@Model?.Email" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <div>
+                                    <textarea class="form-control" asp-for="Address">Address</textarea>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Image</label>
+                                <div>
+                                    <input type="file" id="Image" name="Image" class="form-control" asp-for="Image" />
+                                  
+                                    <img src="~/@Model?.Image" height="100px" width="100px" />
+                                    <span asp-validation-for="Image" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>PostCode</label>
+                                <div>
+                                    <input type="text" id="PostCode" name="PostCode" class="form-control" asp-for="PostCode" value="@Model?.PostCode" />
+                                    <span asp-validation-for="PostCode" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Update</button>
+                        </form>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Image').on('change', function () {
+            var fileInput = $(this)[0]; // or use document.getElementById('Image')
+            var hiddenInput = $('#hiddenImage');
+
+            if (fileInput.files.length > 0) {
+                hiddenInput.hide(); // Hide the hidden field
+            } else {
+                hiddenInput.show(); // Show the hidden field
+            }
+        });
+    });
+</script>

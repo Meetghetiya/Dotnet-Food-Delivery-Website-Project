@@ -1,0 +1,87 @@
+﻿@model Foodi.Areas.Admin.Models.Cart;
+
+
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                        <h4 class="sub-title">
+                                            @if (Model != null && Model.CartId != null)
+                                            {
+                                                <text>Edit Cart</text>
+                                            }
+                                            else
+                                            {
+                                                <text>Add Cart</text>
+                                            }
+                                        </h4>
+                                        <div>
+                                            <form role="form" method="post" asp-area="Admin" asp-controller="CartAdmin" asp-action="@(Model?.CartId > 0 ? "EditCart" : "AddCart")" enctype="multipart/form-data">
+                                                @Html.HiddenFor(x => x.CartId)
+                                                <div class="form-group">
+                                                    <label>Product Id</label>
+                                                    <div>
+                                                        <select id="ProductId" name="ProductId" class="form-control" asp-for="ProductId" asp-items="@(ViewBag.Product != null ? new SelectList(ViewBag.Product, "ProductId", "Name") : Enumerable.Empty<SelectListItem>())">
+                                                            <option selected>Select Product</option>
+                                                        </select>
+                                                        <span asp-validation-for="ProductId" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Quantity</label>
+                                                    <div>
+                                                        <input type="number" id="Quantity" name="Quantity" class="form-control" asp-for="Quantity" value="@Model?.Quantity" />
+                                                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>User Id</label>
+                                                    <div>
+                                                        <select id="UserId" name="UserId" class="form-control" asp-for="UserId" asp-items="@(ViewBag.User != null ? new SelectList(ViewBag.User, "UserID", "Name") : Enumerable.Empty<SelectListItem>())">
+                                                            <option selected>Select User</option>
+                                                        </select>
+                                                        <span asp-validation-for="UserId" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="pb-5">
+                                                    <button class="btn btn-primary" type="submit">
+                                                        @if (Model?.CartId > 0)
+                                                        {
+                                                            <text>Update</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>Add</text>
+                                                        }
+                                                    </button>
+                                                    <a asp-area="Admin" asp-controller="CartAdmin" asp-action="Cart">
+                                                        <button class="btn btn-primary">Back</button>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

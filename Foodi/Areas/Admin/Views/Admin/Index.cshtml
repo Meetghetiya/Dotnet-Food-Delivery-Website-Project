@@ -1,0 +1,334 @@
+﻿@model User;
+
+
+
+
+<div class="main-body">
+    <div class="container">
+        <div class="main-body">
+
+         
+
+        </div>
+
+    </div>
+
+    <div class="page-wrapper">
+        <div class="page-body">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                </ol>
+            </nav>
+            <!-- /Breadcrumb -->
+
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                @if (@Model.Image == null)
+                                {
+                                    <img src="~/@Model.Image" height="100px" width="100px" />
+                                    @* <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"> *@
+                                }else
+                                {
+                                    <img src="~/Admin/images/User.jfif" class="img-radius" alt="User-Profile-Image">
+                                }
+                                <div class="mt-3">
+                                    <h4>@Model.Name</h4>
+                                    <p class="text-secondary mb-1">Address : @Model.Address</p>
+                                    <p class="text-secondary mb-1">Admin</p>
+                                 @*    <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p> *@
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Full Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                   @Model.Name
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                   @Model.Email
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Phone</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                   @Model.Mobile
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Address</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Address
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@Model.UserID">
+                                        <button class="btn btn-info">Edit</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- card1 start -->
+                <a href="@Url.Action("Product", "Product", new { area = "Admin"})" class="your-css-class">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card widget-card-1">
+                            <div class="card-block-small">
+                                <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                <span class="text-c-blue f-w-600"> Product </span>
+
+                                <h4>@ViewBag.ProductCount</h4>
+                                <div>
+                                    <a href="@Url.Action("Product", "Product", new { area = "Admin"})" class="your-css-class">
+                                        <span class="f-left m-t-10 text-muted">
+                                            <i class="text-c-black f-16 icofont icofont-pie-chart  m-r-10"></i>
+                                            View Product
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- card1 end -->
+                <!-- card1 start -->
+                <a href="@Url.Action("Category", "Admin", new { area = "Admin"})" class="your-css-class">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card widget-card-1">
+                            <div class="card-block-small">
+                                <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
+                                <span class="text-c-pink f-w-600">Categories</span>
+                                <h4>@ViewBag.CategoryCount</h4>
+                                <div>
+                                    <a href="@Url.Action("Category", "Admin", new { area = "Admin"})" class="your-css-class">
+                                        <span class="f-left m-t-10 text-muted">
+                                            <i class="text-c-black f-16 icofont icofont-ui-home m-r-10"></i>
+                                            View Category
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- card1 end -->
+                <!-- card1 start -->
+                <a href="@Url.Action("Product", "Product", new { area = "Admin"})" class="your-css-class">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card widget-card-1">
+                            <div class="card-block-small">
+                                <i class=" icofont icofont-user bg-c-green card1-icon"></i>
+                                <span class="text-c-green f-w-600">Users</span>
+                                <h4>@ViewBag.UserCount</h4>
+                                <div>
+                                    <a href="@Url.Action("Product", "Product", new { area = "Admin"})" class="your-css-class">
+                                        <span class="f-left m-t-10 text-muted">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                            </svg>  View Users
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- card1 end -->
+                <!-- Statestics Start -->
+
+
+
+
+                <div class="col-md-12 col-xl-4">
+                    <a href="@Url.Action("Payment", "Payment", new { area = "Admin"})" class="your-css-class">
+                        <div class="card fb-card">
+                            <div class="card-header">
+                                <div class="d-inline-block">
+                                    <h5 class="text-center">Order</h5>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="card-block text-center">
+                                <div class="row">
+                                    <div class="col-6 b-r-default">
+                                        <h2>@ViewBag.orderPending</h2>
+                                        <p class="text-muted">Pending</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <h2>@ViewBag.orderDeliver</h2>
+                                        <p class="text-muted">Deliver</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card dribble-card">
+                        <div class="card-header">
+                            <i class="icofont icofont-social-dribbble"></i>
+                            <div class="d-inline-block">
+                                <h5>dribble</h5>
+                                <span>Product page analysis</span>
+                            </div>
+                        </div>
+                        <div class="card-block text-center">
+                            <div class="row">
+                                <div class="col-6 b-r-default">
+                                    <h2>23</h2>
+                                    <p class="text-muted">Live</p>
+                                </div>
+                                <div class="col-6">
+                                    <h2>23</h2>
+                                    <p class="text-muted">Message</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Sent End -->
+                <!-- Data widget start -->
+                <div class="col-md-12 col-xl-6">
+                    <div class="card project-task">
+                        <div class="card-header">
+                            <div class="card-header-left ">
+                                <h5>Time spent : project &amp; task</h5>
+                            </div>
+                            <div class="card-header-right">
+                                <ul class="list-unstyled card-option">
+                                    <li><i class="icofont icofont-simple-left "></i></li>
+                                    <li><i class="icofont icofont-maximize full-card"></i></li>
+                                    <li><i class="icofont icofont-minus minimize-card"></i></li>
+                                    <li><i class="icofont icofont-refresh reload-card"></i></li>
+                                    <li><i class="icofont icofont-error close-card"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-b-10">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Project & Task</th>
+                                            <th>Time Spents  </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="task-contain">
+                                                    <h6 class="bg-c-blue d-inline-block text-center">U</h6>
+                                                    <p class="d-inline-block m-l-20">UI Design</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="d-inline-block m-r-20">4 : 36</p>
+                                                <div class="progress d-inline-block">
+                                                    <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:80%">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="task-contain">
+                                                    <h6 class="bg-c-pink d-inline-block text-center">R</h6>
+                                                    <p class="d-inline-block m-l-20">Redesign Android App</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="d-inline-block m-r-20">4 : 36</p>
+                                                <div class="progress d-inline-block">
+                                                    <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="task-contain">
+                                                    <h6 class="bg-c-yellow d-inline-block text-center">L</h6>
+                                                    <p class="d-inline-block m-l-20">Logo Design</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="d-inline-block m-r-20">4 : 36</p>
+                                                <div class="progress d-inline-block">
+                                                    <div class="progress-bar bg-c-yellow" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="task-contain">
+                                                    <h6 class="bg-c-green d-inline-block text-center">A</h6>
+                                                    <p class="d-inline-block m-l-20">Appestia landing Page</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="d-inline-block m-r-20">4 : 36</p>
+                                                <div class="progress d-inline-block">
+                                                    <div class="progress-bar bg-c-green" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="task-contain">
+                                                    <h6 class="bg-c-blue d-inline-block text-center">L</h6>
+                                                    <p class="d-inline-block m-l-20">Logo Design</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="d-inline-block m-r-20">4 : 36</p>
+                                                <div class="progress d-inline-block">
+                                                    <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Data widget End -->
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

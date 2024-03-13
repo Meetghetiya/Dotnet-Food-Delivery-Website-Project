@@ -1,0 +1,391 @@
+﻿@model Foodi.Areas.Dashboard.Models.UserOrderTab;
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css" />
+
+
+<style>
+
+
+    * {
+        font-family: "Poppins", sans-serif;
+    }
+
+    #accordionFlushExample {
+        --bs-accordion-focus-box-shadow: none;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .accordion {
+        background: transparent;
+    }
+
+    .accordion-item {
+        background: #ffffff;
+        border: black;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.1),-2px -2px 8px rgba(0,0,0,0.1);
+    }
+
+    .accordion-body {
+        background: #ffffff;
+        font-size: 1rem;
+    }
+
+    .accordion-button {
+        font-size: 0.8rem;
+        background: black;
+        outline: none;
+        border: 1px solid rgba(0,0,0,0.1);
+        font-weight: 500;
+    }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border: black;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: rgba(0,0,0,0.1);
+            color: black;
+            box-shadow: none;
+        }
+
+        .accordion-button::after {
+            background-image: none;
+            content: "\f0d7";
+            font-family: fontawesome;
+            width: auto;
+            height: auto;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            background-image: none;
+        }
+
+    .accordion-button {
+        background: #F8F8FF;
+    }
+
+</style>
+
+  @inject IHttpContextAccessor HttpContextAccessor
+
+@functions {
+    private string GetEmail()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Email");
+
+    }
+    private string GetImage()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Image");
+    }
+
+    private string GetUserId()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("UserId");
+    }
+    private bool IsUserLoggedIn()
+    {
+        return !string.IsNullOrEmpty(GetEmail());
+    }
+    private string GetUserName()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Name");
+    }
+    private string GetCreatedDate()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("CreatedDate");
+    }
+    private string GetPostCode()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("PostCode");
+    }
+    private string GetAddress()
+    {
+        return HttpContextAccessor.HttpContext?.Session.GetString("Address");
+    }
+}
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-md-5">
+        </div>
+        <div class="col-md-4  heading_container">
+            <h2>User Information</h2>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                                @if (@Model.User.Image != null)
+                                {
+                                    <img src="~/@Model?.User.Image" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
+                                }
+                                else
+                                {
+                                    <img src="~/Admin/images/User.jfif" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
+                                }
+                                <div class="middle">
+                                    @*  <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-Id="@GetUserId()">
+                                    <button class="btn btn-primary">Edit Detail</button>
+                                    </a> *@
+                                </div>
+                            </div>
+
+                            <div class="userData ml-3">
+                                <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">
+                                    @Model.User.Name
+                                </h2>
+                                <h6 class="d-block">
+                                    @Model.User.UserName
+                                </h6>
+                                <h6 class="d-block">
+                                    Phone Number : @Model.User.Mobile
+                                </h6>
+                                <a asp-area="UserInfo" asp-controller="Info" asp-action="EditUserDetail">
+                                    <button class="btn btn-primary">Edit Detail</button>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+                                       role="tab" aria-controls="basicInfo" aria-selected="true">
+                                        <i class="fa fa-id-badge mr-2"></i>Basic Info
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="connectedServices-tab" data-toggle="tab" href="#connectedServices"
+                                       role="tab" aria-controls="connectedServices" aria-selected="false">
+                                        <i class="fa fa-clock-o mr-2"></i> Purchased History
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content ml-1" id="myTabContent">
+
+                                @*  Basic User Info *@
+                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
+
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">User</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            @Model.User.Name
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Email</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            @Model.User.UserName
+                                        </div>
+                                    </div>
+                                    <hr />
+
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">PostCode</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            @Model.User.PostCode
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Address</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            @Model.User.Address
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                </div>
+                                @{
+                                    var count = 1;
+                                }
+                                <div class="tab-pane fade" id="connectedServices" role="tabpanel" aria-labelledby="ConnectedServices-tab">
+                                    @foreach (var orderDetail in Model.Orders)
+                                    {
+
+                                        <div>
+
+                                            <div class="accordion p-5 accordion-flush" id="accordionFlushExample">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" data-order-id=@orderDetail.OrderId>
+                                                        <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#flush-@orderDetail.OrderId" aria-expanded="false" aria-controls="flush-@orderDetail.OrderId" data-order-id=@orderDetail.OrderId>
+                                                            <div class="row">
+                                                                <div class="col"> <h3>@count</h3></div>
+                                                                @*  <div class="col"><p>Order ID: @orderDetail.OrderId</p></div> *@
+                                                                <div class="col"><p>Order No: @orderDetail.OrderNo</p></div>
+                                                                <div class="col"><p>User ID: @orderDetail.UserName</p></div>
+                                                                <div class="col"><p>Payment Mode: @orderDetail.PaymentMode</p></div>
+                                                                @if (@orderDetail.Status == "UserDeleteDelivered")
+                                                                {
+                                                                    <div class="col"><p> Delivery Status: Delivered</p></div>
+                                                                }else
+                                                                {
+                                                                    <div class="col"><p> Delivery Status: @orderDetail.Status </p></div>
+                                                                }
+
+
+                                                            </div>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="flush-@orderDetail.OrderId" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body table-responsive">
+                                                            <div class="row">
+                                                                <div class="col-md-6"> <h3>Order Items</h3></div>
+                                                                <div class="col-md-4 "></div>
+                                                                <div class="col-md-2">
+                                                                    @if (@orderDetail.Status == "delivered")
+                                                                    {
+                                                                     @*   <a asp-area="UserInfo" asp-controller="Info" asp-action="DeleteOrderAndItem" asp-route-orderId=@orderDetail.OrderId>
+                                                                            <button class="btn btn-danger">Delete</button>
+                                                                        </a> *@
+                                                                       
+                                                                        <a asp-area="UserInfo" asp-controller="Info" asp-action="SoftUserDelete" asp-route-status="UserDeleteDelivered"  asp-route-orderId=@orderDetail.OrderId>
+                                                                            <button class="btn btn-danger">Delete</button>
+                                                                        </a>
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+
+                                                            <table class="table data-table-export table-hover" id="orderItemsTable">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Order Item ID</th>
+                                                                        <th>Product Name</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Price</th>
+                                                                        <th>Total</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                    <tr>
+                                                                        <td>OrderItemId</td>
+                                                                        <td>ProductId</td>
+                                                                        <td>Quantity</td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        count++;
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    @if (Model.ActivateConnectedServicesTab == true)
+    {
+        <text>
+                $('#myTab a[href="#connectedServices"]').tab('show');
+        </text>
+    }
+
+            $('.accordion-button').on('click', function () {
+                var orderId = $(this).data('order-id');
+
+                $.ajax({
+                    url: '/Dashboard/Payment/GetOrderItems',
+                    method: 'GET',
+                    data: { orderId: orderId },
+                    success: function (response) {
+                        console.log(response);
+                        if (response && response.orderItems && Array.isArray(response.orderItems)) {
+                            console.log(response.orderItems);
+                            displayOrderItems(response.orderItems);
+                        } else {
+                            console.error('Invalid or undefined orderItems in the response.');
+                        }
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+        function displayOrderItems(orderItems) {
+            var tbody = $('#orderItemsTable tbody');
+
+            console.log(orderItems);
+
+            tbody.empty();
+            var grandTotal = 0;
+
+            orderItems.forEach(function (orderItem) {
+                var rowTotal = orderItem.quantity * orderItem.price;
+                grandTotal += rowTotal;
+
+                var row = '<tr>' +
+                    '<td>' + orderItem.orderItemId + '</td>' +
+                    '<td>' + orderItem.productName + '</td>' +
+                    '<td>' + orderItem.quantity + '</td>' +
+                    '<td>' + orderItem.price + '</td>' +
+                    '<td>' + rowTotal + '</td>' +
+                    '</tr>';
+
+                tbody.append(row);
+            });
+
+            var grandTotalRow = '<tr>' +
+                '<td colspan="3"></td>' +
+                '<td> Grand Total</td>' +
+                '<td>' + grandTotal + '</td>' +
+                '</tr>';
+
+            tbody.append(grandTotalRow);
+        }
+
+
+    });
+</script>

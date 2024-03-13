@@ -1,0 +1,65 @@
+﻿@* @{
+    ViewData["Title"] = "Privacy Policy";
+} *@
+
+
+
+
+  <!-- book section -->
+  <section class="book_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Registration
+        </h2>
+      </div>
+
+      <div class="form_container">
+      <form action="">
+
+      <div class="row">
+        <div class="col-md-6">
+          
+              <div>
+                <input type="text" class="form-control" placeholder="Your Name" />
+              </div>
+              <div>
+                <input type="text" class="form-control" placeholder=" UserName" />
+              </div>
+              <div>
+                <input type="text" class="form-control" placeholder="Phone Number" />
+              </div>
+              <div>
+                <input type="email" class="form-control" placeholder="Your Email" />
+              </div>
+  
+              <div class="btn_box">
+                      <button>
+                       Register
+                      </button>
+                      <div>
+                       you have an account? <a class="text-black fw-bold" asp-area="Auth" asp-controller="Auth" asp-action="Signin">Login</a>
+                      </div>
+                 </div>
+             
+          </div>
+        <div class="col-md-6">
+           <div>
+              <textarea class="form-control">Address</textarea>
+           </div>
+           <div>
+                <input type="text" class="form-control" placeholder="Enter Post/Zip Code" />
+           </div>
+            <div>
+                <input type="file" class="form-control" />
+           </div>
+            <div>
+                <input type="text" class="form-control" placeholder="Enter Password" />
+           </div>
+        </div>
+        </div>
+       </form>
+       </div>
+    </div>
+  </section>
+  <!-- end book section -->

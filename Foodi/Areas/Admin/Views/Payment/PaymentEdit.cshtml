@@ -1,0 +1,256 @@
+﻿@model Foodi.Areas.Dashboard.Models.OrderDetail;
+
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-block">
+
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Order No</label>
+
+                                    </div>
+                                    <div class="col">
+                                        <span>:</span>
+                                    </div>
+                                    <div class="col">
+                                        <span>@Model.Order.OrderNo</span>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>PaymentId</label>
+                                    </div>
+                                    <div class="col">
+                                        <span>:</span>
+                                    </div>
+                                    <div class="col">
+                                        <span>@Model.Order.PaymentId</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>PaymentMode</label>
+
+                                    </div>
+                                    <div class="col">
+                                        <span>:</span>
+                                    </div>
+                                    <div class="col">
+                                        <span> @Model.Order.PaymentMode</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Status</label>
+
+                                    </div>
+                                    <div class="col">
+                                        <label>:</label>
+
+                                    </div>
+                                    <div class="col">
+
+                                        <span class="edit-icon" id="editIconContainer">
+                                            @if (@Model.Order.Status == "UserDeleteDelivered")
+                                            {
+                                                <span class="status-text"> Delivered</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="status-text"> @Model.Order.Status</span>
+                                            }
+                                            @*  <span class="status-text"> @Model.Order.Status</span> *@
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-pencil-square ml-2" viewBox="0 0 16 16" id="editIcon">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                            </svg>
+                                        </span>
+                                        <select class="status-edit" style="display: none;" id="statusSelect">
+                                            <option value="pending">Pending</option>
+                                            <option value="delivered">Delivered</option>
+                                        </select>
+                                        <button class="text-edit" id="text-Edit" style="display: none;" onchange="updateStatus()">Edit</button>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Address</label>
+
+                                    </div>
+                                    <div class="col">
+                                        <label>:</label>
+
+                                    </div>
+                                    <div class="col">
+                                        <span class="">@Model.Order.Address</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-4">
+
+                                    <div class="col mobile-inputs">
+                                        <h4 class="text-center fw-bold">Order Item Lists</h4>
+                                        <div class="card-block table-border-style">
+                                            <div class="table-responsive">
+                                                <table class="table data-table-export table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ProductName</th>
+                                                            <th>Price</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @{
+                                                        decimal grandTotal = 0;
+                                                    }
+                                                    <tbody>
+                                                        @foreach (var item in Model.OrderItem)
+                                                        {
+                                                            decimal totalPrice = @item.Quantity * @item.Price;
+                                                            grandTotal += totalPrice;
+                                                            <tr>
+                                                                <td>@item.ProductName</td>
+                                                                <td>@item.Price</td>
+                                                                <td>@item.Quantity</td>
+                                                                <td>@totalPrice</td>
+                                                            </tr>
+                                                        }
+                                                        <tr>
+                                                            <td colspan="2"></td>
+                                                            <td class="pe-lg-5">
+                                                                <b>Grand Total:-</b>
+                                                            </td>
+                                                            <td id="grandTotal">@grandTotal</td>
+                                                        </tr>
+
+                                                    <tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("Payment", "Payment", new { area = "Admin"})" class="your-css-class">
+                                    <button class="btn btn-primary">Back</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    document.getElementById('editIcon').addEventListener('click', function (event) {
+        event.preventDefault();
+        toggleStatusEdit();
+    });
+
+    function toggleElements(showElementId, hideElementId) {
+        $("#" + showElementId).show();
+        $("#" + hideElementId).hide();
+    }
+
+    // Function to toggle status edit elements
+    function toggleStatusEdit() {
+        toggleElements("statusSelect", "editIconContainer");
+        $("#text-Edit").show();
+    }
+
+    function toggleStatusEdits() {
+        $("#statusSelect").hide();
+        $("#editIconContainer").show();
+        $("#text-Edit").hide();
+    }
+
+
+
+    document.getElementById('text-Edit').addEventListener('click', function (event) {
+        event.preventDefault();
+        updateStatus();
+        toggleStatusEdits();
+    });
+    // Function to update status using AJAX
+    function updateStatus() {
+        var orderId = @Model.Order.OrderId;
+        var selectedStatus = $("#statusSelect").val();
+
+        $.ajax({
+            url: '/Admin/Payment/StatusEdit',
+            type: 'POST',
+            data: { orderId: orderId, status: selectedStatus },
+            success: function (response) {
+                $(".status-text").text(response.status);
+                console.log(response);
+            },
+            error: function (error) {
+                // Handle error if needed
+                console.error(error);
+            }
+        });
+    }
+
+</script>
+
+@* <script>
+    $(document).ready(function () {
+        $('.edit-icon').on('click', function () {
+            toggleStatusEdit();
+        });
+
+        $('.status-edit').on('click', function () {
+            toggleStatusEdit();
+        });
+        function toggleStatusEdit() {
+            var editIcon = document.querySelector('.edit-icon');
+            var statusEdit = document.querySelector('.status-edit');
+
+            if (statusEdit.style.display === 'none' || statusEdit.style.display === '') {
+                statusEdit.style.display = 'inline-block';
+                editIcon.style.display = 'none';
+            } else {
+                statusEdit.style.display = 'none';
+                editIcon.style.display = 'inline-block';
+            }
+
+            var selectedValue = document.querySelector('.status-edit').value;
+            var orderId = @Model.Order.OrderId;
+
+            updateStatus(selectedValue, orderId);
+        }
+
+        function updateStatus(selectedValue, orderId) {
+
+
+            $.ajax({
+                url: '/Admin/Payment/StatusEdit',
+                method: 'POST',
+                data: { status: selectedValue, orderId : orderId },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    });
+</script> *@
+
